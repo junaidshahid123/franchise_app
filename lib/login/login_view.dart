@@ -304,7 +304,8 @@ class LoginView extends StatelessWidget {
                 Positioned(
                   top: 15,
                   left: 40,
-                  child: InkWell(
+                  child:
+                  InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },

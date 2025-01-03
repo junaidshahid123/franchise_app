@@ -5,6 +5,10 @@ class BottomBarHostController extends GetxController {
   RxBool home = true.obs;
   RxBool reports = true.obs;
   RxBool account = true.obs;
+  RxBool branchesSelected = false.obs;
+  RxBool start = false.obs;
+  RxBool reportsSelected = false.obs;
+  RxBool selectedBranch = false.obs;
 
   @override
   void onInit() {
@@ -13,6 +17,52 @@ class BottomBarHostController extends GetxController {
     home.value = true;
     reports.value = false;
     account.value = false;
+    branchesSelected.value = false;
+    reportsSelected.value = false;
+    selectedBranch.value = false;
+    start.value = false;
+  }
+
+  void makeStart() {
+    start.value = true;
+    selectedBranch.value = false;
+    branchesSelected.value = false;
+    update();
+  }
+
+  void goToSelectedBranch() {
+    selectedBranch.value = true;
+    branchesSelected.value = false;
+    update();
+  }
+
+  void goToBranches() {
+    selectedBranch.value = false;
+    branchesSelected.value = true;
+    update();
+  }
+
+  void selectBranches() {
+    branchesSelected.value = true;
+    update();
+  }
+
+  void backToBranchesView() {
+    branchesSelected.value = true;
+    selectedBranch.value = false;
+    update();
+  }
+
+  void backToSelectedBranch() {
+    selectedBranch.value = true;
+    start.value = false;
+
+    update();
+  }
+
+  void backToAllView() {
+    branchesSelected.value = false;
+    update();
   }
 
   void makeHome() {
@@ -27,15 +77,20 @@ class BottomBarHostController extends GetxController {
     home.value = false;
     reports.value = true;
     account.value = false;
+    branchesSelected.value = false;
+    selectedBranch.value = false;
+    start.value = false;
+
     update();
-
-
   }
 
   void makeAccount() {
     home.value = false;
     reports.value = false;
     account.value = true;
+    branchesSelected.value = false;
+    selectedBranch.value = false;
+    start.value = false;
     update();
   }
 }

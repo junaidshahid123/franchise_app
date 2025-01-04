@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import '../select_service/select_service_view.dart';
 import 'bottom_bar_host_logic.dart';
 
 class BottomBarHostView extends StatelessWidget {
@@ -21,6 +22,8 @@ class BottomBarHostView extends StatelessWidget {
                 logic.backToAllView();
               } else if (logic.start.value == true) {
                 logic.backToSelectedBranch();
+              } else if (logic.bellSelected.value == true) {
+                logic.backToAllView();
               } else {
                 // Show the exit confirmation dialog
                 bool exitApp = await showDialog(
@@ -119,51 +122,20 @@ class BottomBarHostView extends StatelessWidget {
                               ),
                               const Spacer(),
                               // Second Image Container
-                              Container(
-                                margin: const EdgeInsets.only(right: 20),
-                                width: 50,
-                                height: 50,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    logic.selectedBranch.value == true
-                                        ? Image.asset(
-                                            'assets/images/ellipseLightBlue.png',
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (BuildContext context,
-                                                Object error,
-                                                StackTrace? stackTrace) {
-                                              return const Icon(Icons.error);
-                                            },
-                                          )
-                                        : logic.start.value == true
-                                            ? Image.asset(
-                                                'assets/images/ellipseLightBlue.png',
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (BuildContext
-                                                        context,
-                                                    Object error,
-                                                    StackTrace? stackTrace) {
-                                                  return const Icon(
-                                                      Icons.error);
-                                                },
-                                              )
-                                            : Image.asset(
-                                                'assets/images/whiteEllipse.png',
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (BuildContext
-                                                        context,
-                                                    Object error,
-                                                    StackTrace? stackTrace) {
-                                                  return const Icon(
-                                                      Icons.error);
-                                                },
-                                              ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: logic.selectedBranch.value == true
+                              InkWell(
+                                onTap: () {
+                                  logic.goToNotifications();
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 20),
+                                  width: 50,
+                                  height: 50,
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      logic.selectedBranch.value == true
                                           ? Image.asset(
-                                              'assets/images/whiteBell.png',
+                                              'assets/images/ellipseLightBlue.png',
                                               fit: BoxFit.cover,
                                               errorBuilder:
                                                   (BuildContext context,
@@ -174,7 +146,7 @@ class BottomBarHostView extends StatelessWidget {
                                             )
                                           : logic.start.value == true
                                               ? Image.asset(
-                                                  'assets/images/whiteBell.png',
+                                                  'assets/images/ellipseLightBlue.png',
                                                   fit: BoxFit.cover,
                                                   errorBuilder: (BuildContext
                                                           context,
@@ -185,7 +157,7 @@ class BottomBarHostView extends StatelessWidget {
                                                   },
                                                 )
                                               : Image.asset(
-                                                  'assets/images/bell.png',
+                                                  'assets/images/whiteEllipse.png',
                                                   fit: BoxFit.cover,
                                                   errorBuilder: (BuildContext
                                                           context,
@@ -195,8 +167,49 @@ class BottomBarHostView extends StatelessWidget {
                                                         Icons.error);
                                                   },
                                                 ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: logic.selectedBranch.value ==
+                                                true
+                                            ? Image.asset(
+                                                'assets/images/whiteBell.png',
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (BuildContext
+                                                        context,
+                                                    Object error,
+                                                    StackTrace? stackTrace) {
+                                                  return const Icon(
+                                                      Icons.error);
+                                                },
+                                              )
+                                            : logic.start.value == true
+                                                ? Image.asset(
+                                                    'assets/images/whiteBell.png',
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder:
+                                                        (BuildContext context,
+                                                            Object error,
+                                                            StackTrace?
+                                                                stackTrace) {
+                                                      return const Icon(
+                                                          Icons.error);
+                                                    },
+                                                  )
+                                                : Image.asset(
+                                                    'assets/images/bell.png',
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder:
+                                                        (BuildContext context,
+                                                            Object error,
+                                                            StackTrace?
+                                                                stackTrace) {
+                                                      return const Icon(
+                                                          Icons.error);
+                                                    },
+                                                  ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -263,22 +276,50 @@ class BottomBarHostView extends StatelessWidget {
                                       ],
                                     )
                                   : logic.reports.value == true
-                                      ? Container()
+                                      ? Text(
+                                          '',
+                                          style: TextStyle(
+                                            fontFamily: 'Alexandria',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 22,
+                                            color: Colors.white,
+                                          ),
+                                        )
                                       : logic.account.value == true
-                                          ? Container()
-                                          : Row(
-                                              children: [
-                                                Text(
-                                                  'Hi, Grgir person',
+                                          ? Text(
+                                              '',
+                                              style: TextStyle(
+                                                fontFamily: 'Alexandria',
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 22,
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : logic.bellSelected.value == true
+                                              ? const Text(
+                                                  '',
                                                   style: TextStyle(
                                                     fontFamily: 'Alexandria',
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 22,
                                                     color: Colors.white,
                                                   ),
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Text(
+                                                      'Hi, Grgir person',
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Alexandria',
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 22,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
                         ),
                         const SizedBox(height: 20),
 
@@ -655,6 +696,24 @@ class BottomBarHostView extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.to(() =>
+                                                      SelectServiceView());
+                                                  // logic.goToSelectService();
+                                                },
+                                                child: Container(
+                                                  height: 50,
+                                                  width: 150,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      color: Colors.blue[200]),
+                                                  child: Center(
+                                                      child: Text('Continue')),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         )
@@ -705,16 +764,25 @@ class BottomBarHostView extends StatelessWidget {
                                                                           context)
                                                                     ],
                                                                   )
-                                                                : SingleChildScrollView(
-                                                                    child:
-                                                                        Column(
-                                                                      children: [
-                                                                        logic.branchesSelected.value
-                                                                            ? buildListOfBranches(logic)
-                                                                            : buildBranchesAndReportsViews(logic),
-                                                                      ],
-                                                                    ),
-                                                                  )),
+                                                                : logic.bellSelected
+                                                                        .value
+                                                                    ? Column(
+                                                                        children: [
+                                                                          buildNotifications(
+                                                                              logic,
+                                                                              context)
+                                                                        ],
+                                                                      )
+                                                                    : SingleChildScrollView(
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            logic.branchesSelected.value
+                                                                                ? buildListOfBranches(logic)
+                                                                                : buildBranchesAndReportsViews(logic)
+                                                                          ],
+                                                                        ),
+                                                                      )),
                                               ),
 
                                               // Second Container
@@ -724,137 +792,186 @@ class BottomBarHostView extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                   color: Color(0xFF1F5077),
                                                 ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'Second Container Content',
-                                                    style: const TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
+                                                // child: Center(
+                                                //   child: Text(
+                                                //     'Second Container Content',
+                                                //     style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       color: Colors.black,
+                                                //     ),
+                                                //   ),
+                                                // ),
                                               ),
                                             ],
                                           ),
                                         ),
                               // Third Container with half in first and half in second
+                              logic.selectService.value == true
+                                  ? Container()
+                                  :
                               Positioned(
-                                bottom: 30,
-                                left: 20,
-                                // Horizontal margin (adjust as needed)
-                                right: 20,
-                                // Horizontal margin (adjust as needed)
-                                // top: MediaQuery.of(context).size.height * 0.25 - 50, // Adjust for first container's height
-                                child: Container(
-                                  height: 70,
-                                  // Fixed height for the third container
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFD1E6FB),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(100)),
-                                  ),
-                                  child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 30,
-                                        right: 30,
-                                        top: 10,
-                                        bottom: 10),
-                                    child: Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            logic.makeHome();
-                                          },
-                                          child: Container(
-                                            child: logic.home.value == true
-                                                ? Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Image.asset(
-                                                          'assets/images/highlightingPolygon.png'),
-                                                      Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          child: Image.asset(
-                                                              'assets/images/home.png')),
-                                                    ],
-                                                  )
-                                                : Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            10),
-                                                    child: Image.asset(
-                                                        'assets/images/home.png')),
+                                      bottom: 5,
+                                      left: 20,
+                                      // Horizontal margin (adjust as needed)
+                                      right: 20,
+                                      // Horizontal margin (adjust as needed)
+                                      // top: MediaQuery.of(context).size.height * 0.25 - 50, // Adjust for first container's height
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 70,
+                                            // Fixed height for the third container
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFD1E6FB),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(100)),
+                                            ),
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  left: 30,
+                                                  right: 30,
+                                                  top: 10,
+                                                  bottom: 10),
+                                              child: Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () {
+                                                      logic.makeHome();
+                                                    },
+                                                    child: Container(
+                                                      child: logic.home.value ==
+                                                              true
+                                                          ? Stack(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              children: [
+                                                                Image.asset(
+                                                                    'assets/images/highlightingPolygon.png'),
+                                                                Container(
+                                                                    margin:
+                                                                        const EdgeInsets
+                                                                            .all(
+                                                                            10),
+                                                                    child: Image
+                                                                        .asset(
+                                                                            'assets/images/home.png')),
+                                                              ],
+                                                            )
+                                                          : Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Image.asset(
+                                                                  'assets/images/home.png')),
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      logic.makeReports();
+                                                    },
+                                                    child: Container(
+                                                      child: logic.reports
+                                                                  .value ==
+                                                              true
+                                                          ? Stack(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              children: [
+                                                                Image.asset(
+                                                                    'assets/images/highlightingPolygon.png'),
+                                                                Container(
+                                                                    margin:
+                                                                        const EdgeInsets
+                                                                            .all(
+                                                                            10),
+                                                                    child: Image
+                                                                        .asset(
+                                                                            'assets/images/reports.png')),
+                                                              ],
+                                                            )
+                                                          : Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Image.asset(
+                                                                  'assets/images/reports.png')),
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      logic.makeAccount();
+                                                    },
+                                                    child: Container(
+                                                      child: logic.account
+                                                                  .value ==
+                                                              true
+                                                          ? Stack(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              children: [
+                                                                Image.asset(
+                                                                    'assets/images/highlightingPolygon.png'),
+                                                                Container(
+                                                                    margin:
+                                                                        const EdgeInsets
+                                                                            .all(
+                                                                            10),
+                                                                    child: Image
+                                                                        .asset(
+                                                                            'assets/images/profile.png')),
+                                                              ],
+                                                            )
+                                                          : Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Image.asset(
+                                                                  'assets/images/profile.png')),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        const Spacer(),
-                                        InkWell(
-                                          onTap: () {
-                                            logic.makeReports();
-                                          },
-                                          child: Container(
-                                            child: logic.reports.value == true
-                                                ? Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Image.asset(
-                                                          'assets/images/highlightingPolygon.png'),
-                                                      Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          child: Image.asset(
-                                                              'assets/images/reports.png')),
-                                                    ],
-                                                  )
-                                                : Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            10),
-                                                    child: Image.asset(
-                                                        'assets/images/reports.png')),
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        InkWell(
-                                          onTap: () {
-                                            logic.makeAccount();
-                                          },
-                                          child: Container(
-                                            child: logic.account.value == true
-                                                ? Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Image.asset(
-                                                          'assets/images/highlightingPolygon.png'),
-                                                      Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          child: Image.asset(
-                                                              'assets/images/profile.png')),
-                                                    ],
-                                                  )
-                                                : Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            10),
-                                                    child: Image.asset(
-                                                        'assets/images/profile.png')),
-                                          ),
-                                        ),
-                                      ],
+                                          Container(
+                                            margin: EdgeInsets.only(left: 30,right: 30),
+                                              height: 30,
+                                              // color: Colors.black,
+                                              child: Row(
+                                                children: [
+                                                  Text('Home',style: TextStyle(
+                                                    fontFamily: 'Alexandria',
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 16,color: Colors.white
+                                                  ),),
+                                                  Spacer(),
+                                                  Text('Reports',style: TextStyle(
+                                                      fontFamily: 'Alexandria',
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 16,color: Colors.white
+                                                  ),),                                                  Spacer(),
+                                                  Text('Account',style: TextStyle(
+                                                      fontFamily: 'Alexandria',
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 16,color: Colors.white
+                                                  ),),                                                ],
+                                              ))
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    logic.branchesSelected.value == true
+                    logic.branchesSelected.value == true ||
+                            logic.bellSelected.value == true
                         ? Positioned(
                             top: 170,
                             left: 20,
@@ -1064,6 +1181,296 @@ class BottomBarHostView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildSelectServiceView(BottomBarHostController logic) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Container(
+          //   margin: EdgeInsets.only(top: 40, left: 20),
+          //   height: 40,
+          //   width: 200,
+          //   decoration: BoxDecoration(
+          //     color: Color(0xFFE5EFF9),
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: Colors.grey.withOpacity(0.5),
+          //         spreadRadius: 1,
+          //         blurRadius: 5,
+          //         offset: Offset(0, 3), // Shadow position
+          //       ),
+          //     ],
+          //     borderRadius:
+          //     BorderRadius.circular(20), // Optional for rounded corners
+          //   ),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       // Text Section
+          //       Padding(
+          //         padding: const EdgeInsets.symmetric(horizontal: 10),
+          //         child: Text(
+          //           'Select a city',
+          //           style: TextStyle(
+          //             fontWeight: FontWeight.w400,
+          //             fontSize: 20,
+          //             color: Color(0xFF507799),
+          //           ),
+          //         ),
+          //       ),
+          //       // Spacer
+          //       Spacer(),
+          //       // Dropdown Icon Section
+          //       Padding(
+          //         padding: const EdgeInsets.symmetric(horizontal: 10),
+          //         child: Image.asset(
+          //           'assets/images/dropDown.png',
+          //           height: 20, // Adjust the size of the icon
+          //           width: 20,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Container(
+          //   margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+          //   child: Row(
+          //     children: [
+          //       Text(
+          //         'All Branches',
+          //         style: TextStyle(
+          //           fontFamily: 'Alexandria',
+          //           fontWeight: FontWeight.w600,
+          //           fontSize: 22,
+          //           color: const Color(0xFF1F5077),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Expanded(
+          //   child: ListView.builder(
+          //     scrollDirection: Axis.vertical,
+          //     itemCount: 5,
+          //     itemBuilder: (context, index) {
+          //       return InkWell(
+          //         onTap: () {
+          //           logic.goToSelectedBranch();
+          //         },
+          //         child: Container(
+          //           margin:
+          //           const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          //           height: 200, // Set height for the entire item
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(10),
+          //             color: Colors.grey[200],
+          //           ),
+          //           child: LayoutBuilder(
+          //             builder: (context, constraints) {
+          //               double availableHeight =
+          //                   constraints.maxHeight; // Get parent height
+          //               double imageHeight = availableHeight *
+          //                   0.6; // Allocate 60% height for the image
+          //               return Column(
+          //                 children: [
+          //                   SizedBox(
+          //                     height: imageHeight,
+          //                     // Dynamically set image height
+          //                     child: ClipRRect(
+          //                       borderRadius: BorderRadius.circular(30),
+          //                       child: Stack(
+          //                         children: [
+          //                           Image.asset(
+          //                             'assets/images/dummyFood.png',
+          //                             fit: BoxFit.cover,
+          //                             width: double.infinity,
+          //                           ),
+          //                           Image.asset(
+          //                             'assets/images/meshraqTitleImage.png',
+          //                             fit: BoxFit.contain,
+          //                             width: double.infinity,
+          //                           ),
+          //                         ],
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   Expanded(
+          //                     // Remaining space for text and icon
+          //                     child: Row(
+          //                       mainAxisAlignment:
+          //                       MainAxisAlignment.spaceBetween,
+          //                       children: [
+          //                         // Left Section (Text)
+          //                         Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               horizontal: 10),
+          //                           child: Text(
+          //                             'Al-Ulaya, Riyadh',
+          //                             style: const TextStyle(
+          //                               fontSize: 22,
+          //                               fontFamily: 'Alexandria',
+          //                               fontWeight: FontWeight.w600,
+          //                               color: Color(0xFF1F5077),
+          //                             ),
+          //                           ),
+          //                         ),
+          //                         // Right Section (Small Image/Icon)
+          //                         Padding(
+          //                           padding: const EdgeInsets.symmetric(
+          //                               horizontal: 10),
+          //                           child: Image.asset(
+          //                             'assets/images/indication.png',
+          //                             height: 40,
+          //                             width: 40,
+          //                           ),
+          //                         ),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                 ],
+          //               );
+          //             },
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildNotifications(
+      BottomBarHostController logic, BuildContext context) {
+    return Expanded(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 40),
+              child: Row(
+                children: [
+                  Text(
+                    'Notifications',
+                    style: TextStyle(
+                      fontFamily: 'Alexandria',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22,
+                      color: const Color(0xFF1F5077),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 10, // Number of items in the list
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 20),
+                          child: Row(
+                            children: [
+                              Spacer(),
+                              Text(
+                                '11:42 PM',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: Colors.grey[400]),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                blurRadius: 5,
+                                spreadRadius: 2,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // Center the Row content
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/ellipseForA.png',
+                                      width: 40,
+                                      // Adjusted width for better appearance
+                                      height: 40,
+                                      // Adjusted height for better appearance
+                                      fit: BoxFit
+                                          .cover, // Ensures the image fits nicely
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.asset(
+                                        'assets/images/profileFor.png',
+                                        width: 20,
+                                        // Adjusted width for better appearance
+                                        height:
+                                            20, // Adjusted height for better appearance
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 15),
+                              // Space between the Stack and Text
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  // Center the text vertically
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'New update available',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                        color: Color(0xFF2E76B0),
+                                        fontFamily: 'Alexandria',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
